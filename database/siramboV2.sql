@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jan 2026 pada 01.46
+-- Waktu pembuatan: 02 Jan 2026 pada 02.09
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -35,7 +35,7 @@ CREATE TABLE `fact_pdrb_fenomena` (
   `id_komponen` int(11) NOT NULL,
   `deskripsi_fenomena` text NOT NULL,
   `kategori_fenomena` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -48,10 +48,10 @@ CREATE TABLE `fact_pdrb_transaksi` (
   `kode_wilayah` varchar(10) NOT NULL,
   `id_periode` int(11) NOT NULL,
   `id_komponen` int(11) NOT NULL,
-  `nilai_adhb` decimal(20,2) NOT NULL DEFAULT 0.00,
-  `nilai_adhk` decimal(20,2) NOT NULL DEFAULT 0.00,
+  `nilai_adhb` decimal(20,2) DEFAULT NULL,
+  `nilai_adhk` decimal(20,2) DEFAULT NULL,
   `status_data` enum('INPUT','RECONCILED','FINAL') NOT NULL DEFAULT 'INPUT'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ CREATE TABLE `log_audit_data` (
   `user_id` varchar(50) NOT NULL,
   `waktu_aksi` timestamp NOT NULL DEFAULT current_timestamp(),
   `fase_rekonsiliasi` enum('MANDIRI','PRA-REKON','REKON-PROV') NOT NULL DEFAULT 'MANDIRI'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -84,14 +84,7 @@ CREATE TABLE `mst_wilayah` (
   `kode_induk` varchar(10) DEFAULT NULL,
   `level_wilayah` enum('PROVINSI','KABUPATEN','KOTA') NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `mst_wilayah`
---
-
-INSERT INTO `mst_wilayah` (`kode_wilayah`, `nama_wilayah`, `kode_induk`, `level_wilayah`, `is_active`) VALUES
-('09888888', 'kendari', NULL, 'KABUPATEN', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -105,10 +98,10 @@ CREATE TABLE `ref_komponen_pdrb` (
   `nama_komponen` varchar(255) NOT NULL,
   `id_induk` int(11) DEFAULT NULL,
   `jenis_pendekatan` enum('LAPANGAN_USAHA','PENGELUARAN') NOT NULL,
-  `level_hierarki` int(11) NOT NULL,
-  `is_calculable` tinyint(1) NOT NULL DEFAULT 0,
-  `id_versi_kbli` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `level_hierarki` int(11) NOT NULL DEFAULT 1,
+  `is_calculable` tinyint(1) NOT NULL DEFAULT 1,
+  `id_versi_kbli` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -138,7 +131,7 @@ CREATE TABLE `ref_versi_statistik` (
   `berlaku_mulai` date NOT NULL,
   `berlaku_sampai` date DEFAULT NULL,
   `status_aktif` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -153,7 +146,26 @@ CREATE TABLE `status_input_wilayah` (
   `persentase_selesai` decimal(5,2) NOT NULL DEFAULT 0.00,
   `status_finalisasi` enum('DRAFT','SUBMITTED','APPROVED') NOT NULL DEFAULT 'DRAFT',
   `waktu_submit` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` varchar(50) NOT NULL,
+  `nama` varchar(120) NOT NULL,
+  `email` varchar(120) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `role` enum('ADMIN','PROV','KABKOTA','VIEWER') NOT NULL DEFAULT 'VIEWER',
+  `kode_wilayah` varchar(10) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `last_login` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -165,9 +177,9 @@ CREATE TABLE `status_input_wilayah` (
 ALTER TABLE `fact_pdrb_fenomena`
   ADD PRIMARY KEY (`id_fenomena`),
   ADD KEY `idx_fenomena_transaksi` (`id_transaksi`),
-  ADD KEY `idx_fenomena_wilayah` (`kode_wilayah`),
-  ADD KEY `idx_fenomena_periode` (`id_periode`),
-  ADD KEY `idx_fenomena_komponen` (`id_komponen`);
+  ADD KEY `idx_fenomena_wilayah_periode` (`kode_wilayah`,`id_periode`),
+  ADD KEY `fk_fenomena_periode` (`id_periode`),
+  ADD KEY `fk_fenomena_komponen` (`id_komponen`);
 
 --
 -- Indeks untuk tabel `fact_pdrb_transaksi`
@@ -175,7 +187,6 @@ ALTER TABLE `fact_pdrb_fenomena`
 ALTER TABLE `fact_pdrb_transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
   ADD UNIQUE KEY `uq_transaksi` (`kode_wilayah`,`id_periode`,`id_komponen`),
-  ADD KEY `idx_transaksi_wilayah` (`kode_wilayah`),
   ADD KEY `idx_transaksi_periode` (`id_periode`),
   ADD KEY `idx_transaksi_komponen` (`id_komponen`),
   ADD KEY `idx_transaksi_status` (`status_data`);
@@ -194,8 +205,7 @@ ALTER TABLE `log_audit_data`
 --
 ALTER TABLE `mst_wilayah`
   ADD PRIMARY KEY (`kode_wilayah`),
-  ADD KEY `idx_wilayah_induk` (`kode_induk`),
-  ADD KEY `idx_wilayah_level` (`level_wilayah`);
+  ADD KEY `idx_wilayah_induk` (`kode_induk`);
 
 --
 -- Indeks untuk tabel `ref_komponen_pdrb`
@@ -203,7 +213,6 @@ ALTER TABLE `mst_wilayah`
 ALTER TABLE `ref_komponen_pdrb`
   ADD PRIMARY KEY (`id_komponen`),
   ADD KEY `idx_komponen_induk` (`id_induk`),
-  ADD KEY `idx_komponen_pendekatan` (`jenis_pendekatan`),
   ADD KEY `idx_komponen_versi` (`id_versi_kbli`);
 
 --
@@ -211,26 +220,33 @@ ALTER TABLE `ref_komponen_pdrb`
 --
 ALTER TABLE `ref_periode_laporan`
   ADD PRIMARY KEY (`id_periode`),
-  ADD UNIQUE KEY `uq_periode` (`tahun`,`triwulan`),
-  ADD KEY `idx_periode_status` (`status_input`);
+  ADD UNIQUE KEY `uq_periode` (`tahun`,`triwulan`);
 
 --
 -- Indeks untuk tabel `ref_versi_statistik`
 --
 ALTER TABLE `ref_versi_statistik`
   ADD PRIMARY KEY (`id_versi`),
-  ADD KEY `idx_versi_aktif` (`status_aktif`),
-  ADD KEY `idx_versi_periode` (`berlaku_mulai`,`berlaku_sampai`);
+  ADD UNIQUE KEY `uq_versi_nama_tahun` (`nama_versi`,`tahun_dasar`),
+  ADD KEY `idx_versi_aktif` (`status_aktif`,`berlaku_mulai`,`berlaku_sampai`);
 
 --
 -- Indeks untuk tabel `status_input_wilayah`
 --
 ALTER TABLE `status_input_wilayah`
   ADD PRIMARY KEY (`id_status`),
-  ADD UNIQUE KEY `uq_status_wilayah_periode` (`id_periode`,`kode_wilayah`),
+  ADD UNIQUE KEY `uq_status_wilayah` (`id_periode`,`kode_wilayah`),
   ADD KEY `idx_status_periode` (`id_periode`),
-  ADD KEY `idx_status_wilayah` (`kode_wilayah`),
-  ADD KEY `idx_status_finalisasi` (`status_finalisasi`);
+  ADD KEY `idx_status_wilayah` (`kode_wilayah`);
+
+--
+-- Indeks untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `uq_users_email` (`email`),
+  ADD KEY `idx_users_role` (`role`),
+  ADD KEY `idx_users_wilayah` (`kode_wilayah`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
@@ -303,7 +319,8 @@ ALTER TABLE `fact_pdrb_transaksi`
 -- Ketidakleluasaan untuk tabel `log_audit_data`
 --
 ALTER TABLE `log_audit_data`
-  ADD CONSTRAINT `fk_audit_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `fact_pdrb_transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_audit_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `fact_pdrb_transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `mst_wilayah`
@@ -316,14 +333,20 @@ ALTER TABLE `mst_wilayah`
 --
 ALTER TABLE `ref_komponen_pdrb`
   ADD CONSTRAINT `fk_komponen_induk` FOREIGN KEY (`id_induk`) REFERENCES `ref_komponen_pdrb` (`id_komponen`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_komponen_versi` FOREIGN KEY (`id_versi_kbli`) REFERENCES `ref_versi_statistik` (`id_versi`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_komponen_versi` FOREIGN KEY (`id_versi_kbli`) REFERENCES `ref_versi_statistik` (`id_versi`) ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `status_input_wilayah`
 --
 ALTER TABLE `status_input_wilayah`
-  ADD CONSTRAINT `fk_status_periode` FOREIGN KEY (`id_periode`) REFERENCES `ref_periode_laporan` (`id_periode`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_status_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_status_periode` FOREIGN KEY (`id_periode`) REFERENCES `ref_periode_laporan` (`id_periode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_status_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

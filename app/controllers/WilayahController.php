@@ -5,6 +5,7 @@ class WilayahController extends Controller {
     private WilayahModel $m;
 
     public function __construct() {
+        $this->requireAuth();
         $this->m = new WilayahModel();
     }
 

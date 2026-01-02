@@ -11,3 +11,7 @@ define('DB_CHARSET', 'utf8mb4');
 
 // App
 date_default_timezone_set('Asia/Makassar');
+
+// Auth sederhana
+define('AUTH_USER', 'admin');
+define('AUTH_PASS', 'admin123');

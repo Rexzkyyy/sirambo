@@ -2,9 +2,9 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
 .table thead th { white-space: nowrap; }
 
 .auth-body {
-  background: radial-gradient(circle at 15% 20%, rgba(0, 169, 226, 0.2) 0, transparent 26%),
-              radial-gradient(circle at 85% 10%, rgba(0, 166, 121, 0.22) 0, transparent 30%),
-              linear-gradient(135deg, #0b1428, #0d1d3d 50%, #081026);
+  background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.26) 0, transparent 28%),
+              radial-gradient(circle at 82% 12%, rgba(37, 99, 235, 0.24) 0, transparent 32%),
+              linear-gradient(135deg, #08142d, #0b2c63 50%, #061026);
   min-height: 100vh;
   position: relative;
   overflow: hidden;
@@ -37,9 +37,9 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   animation: float 12s ease-in-out infinite;
 }
 
-.floating-shape.shape-1 { background: #65c3ff; top: 5%; left: 8%; }
-.floating-shape.shape-2 { background: #c084fc; bottom: 10%; right: 15%; animation-delay: 2s; }
-.floating-shape.shape-3 { background: #f472b6; top: 40%; right: 45%; animation-delay: 4s; }
+.floating-shape.shape-1 { background: #38bdf8; top: 5%; left: 8%; }
+.floating-shape.shape-2 { background: #2563eb; bottom: 10%; right: 15%; animation-delay: 2s; }
+.floating-shape.shape-3 { background: #0ea5e9; top: 40%; right: 45%; animation-delay: 4s; }
 
 .grid-lines {
   position: absolute;
@@ -109,8 +109,8 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(0, 169, 226, 0.12), transparent 40%),
-              radial-gradient(circle at 80% 60%, rgba(240, 180, 70, 0.12), transparent 35%);
+  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.16), transparent 42%),
+              radial-gradient(circle at 80% 60%, rgba(37, 99, 235, 0.12), transparent 36%);
   pointer-events: none;
 }
 
@@ -120,7 +120,7 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   gap: 0.65rem;
   padding: 0.5rem 0.9rem;
   border-radius: 12px;
-  background: linear-gradient(120deg, rgba(99, 102, 241, 0.14), rgba(244, 114, 182, 0.14));
+  background: linear-gradient(120deg, rgba(37, 99, 235, 0.14), rgba(56, 189, 248, 0.14));
   color: #0f172a;
   font-size: 0.95rem;
   border: 1px solid rgba(15, 23, 42, 0.08);
@@ -154,8 +154,8 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   align-items: center;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
-  background: rgba(99, 102, 241, 0.08);
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.16);
   font-weight: 600;
   font-size: 0.9rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -202,27 +202,27 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
 }
 
 .bg-gradient-pink {
-  background: linear-gradient(135deg, #f472b6, #c084fc);
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
   border: none;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
 }
 
 .auth-wrapper .card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(130deg, rgba(99, 102, 241, 0.08), rgba(34, 211, 238, 0.05));
+  background: linear-gradient(130deg, rgba(37, 99, 235, 0.08), rgba(56, 189, 248, 0.06));
   opacity: 0.8;
   pointer-events: none;
 }
@@ -232,7 +232,7 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   position: absolute;
   width: 120px;
   height: 120px;
-  background: radial-gradient(circle, rgba(244, 114, 182, 0.12), transparent 60%);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.14), transparent 60%);
   bottom: -30px;
   right: -30px;
   pointer-events: none;

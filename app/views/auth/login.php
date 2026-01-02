@@ -6,7 +6,7 @@
         <span class="pulse-dot"></span>
         <div>
           <div class="fw-semibold">Masuk &amp; Jelajahi</div>
-          <small class="text-muted">Koneksi langsung ke tabel <code>users</code></small>
+          <small class="text-muted">Koneksi langsung ke tabel <code>users</code> BPS Sultra</small>
         </div>
       </div>
       <div class="d-flex align-items-center gap-2">
@@ -20,10 +20,10 @@
         <span class="brand-initials">BPS</span>
       </div>
       <div class="brand-long-text mx-auto mb-2">
-        <div class="brand-long-top">Badan Pusat Statistik</div>
-        <small class="text-primary fw-semibold">Pintu masuk resmi PDRB</small>
+        <div class="brand-long-top">BPS Provinsi Sulawesi Tenggara</div>
+        <small class="text-primary fw-semibold">Gerbang resmi PDRB Sultra</small>
       </div>
-      <p class="text-muted mb-0">Gunakan ID pengguna atau email yang terdaftar untuk mengakses PDRB Panel.</p>
+      <p class="text-muted mb-0">Gunakan ID pengguna atau email terdaftar untuk mengakses Panel PDRB Sultra.</p>
     </div>
 
     <?php if (!empty($error)): ?>

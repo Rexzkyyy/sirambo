@@ -12,7 +12,7 @@ class Controller {
     }
 
     protected function requireAuth() {
-        if (empty($_SESSION['user'])) {
+        if (empty($_SESSION['user']) || !is_array($_SESSION['user'])) {
             $this->redirect('/login');
         }
     }

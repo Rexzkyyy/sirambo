@@ -7,7 +7,7 @@
       <?php
         $displayName = 'Tamu';
         if (is_array($user)) {
-            $candidate = $user['name'] ?? $user['email'] ?? 'Pengguna';
+            $candidate = $user['name'] ?? $user['nama'] ?? $user['email'] ?? 'Pengguna';
             if (is_array($candidate)) {
                 $candidate = reset($candidate) ?: 'Pengguna';
             }
@@ -16,7 +16,8 @@
             $displayName = $user;
         }
       ?>
-      <span class="fw-semibold">
+      <span class="fw-semibold d-flex align-items-center gap-2">
+        <i class="bi bi-person-circle"></i>
         <?= htmlspecialchars($displayName, ENT_QUOTES, 'UTF-8') ?>
       </span>
       <?php if (!empty($user)): ?>

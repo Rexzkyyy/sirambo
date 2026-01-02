@@ -126,6 +126,12 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
+.brand-bubble-blue {
+  background: linear-gradient(145deg, #0f4ba8, #0ea5e9);
+  color: #e0f2fe;
+  box-shadow: 0 16px 40px rgba(14, 165, 233, 0.35);
+}
+
 .pulse-dot {
   width: 10px;
   height: 10px;
@@ -191,6 +197,33 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
+.morph-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.morph-card::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 45%),
+              radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.18), transparent 38%);
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0.7;
+}
+
+.morph-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.morph-card-blue { background: linear-gradient(145deg, rgba(37, 99, 235, 0.14), rgba(59, 130, 246, 0.2)); }
+.morph-card-cyan { background: linear-gradient(145deg, rgba(14, 165, 233, 0.16), rgba(59, 130, 246, 0.14)); }
+.morph-card-navy { background: linear-gradient(145deg, rgba(8, 47, 73, 0.18), rgba(15, 118, 178, 0.16)); }
+
 .icon-badge {
   width: 38px;
   height: 38px;
@@ -203,6 +236,10 @@ body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-seri
 
 .bg-gradient-primary {
   background: linear-gradient(135deg, #2563eb, #38bdf8);
+}
+
+.bg-gradient-cyan {
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee);
 }
 
 .bg-gradient-pink {

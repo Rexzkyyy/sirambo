@@ -16,14 +16,14 @@
     </div>
 
     <div class="login-brand text-center mb-4">
-      <div class="brand-bubble brand-text-badge mx-auto mb-3">
+      <div class="brand-bubble brand-text-badge mx-auto mb-3 brand-bubble-blue">
         <span class="brand-initials">BPS</span>
       </div>
       <div class="brand-long-text mx-auto mb-2">
-        <div class="brand-long-top">BPS Provinsi Sulawesi Tenggara</div>
-        <small class="text-primary fw-semibold">Gerbang resmi PDRB Sultra</small>
+        <div class="brand-long-top text-primary">Gerbang Biru PDRB Sultra</div>
+        <small class="text-primary fw-semibold">BPS Provinsi Sulawesi Tenggara</small>
       </div>
-      <p class="text-muted mb-0">Gunakan ID pengguna atau email terdaftar untuk mengakses Panel PDRB Sultra.</p>
+      <p class="text-muted mb-0">Masuk untuk melanjutkan ke panel statistik ekonomi Sulawesi Tenggara yang modern dan atraktif.</p>
     </div>
 
     <?php if (!empty($error)): ?>
@@ -73,30 +73,30 @@
       </div>
 
       <div class="row g-3 info-grid">
-        <div class="col-12 col-md-6">
-          <div class="info-tile">
+        <div class="col-12 col-md-4">
+          <div class="info-tile morph-card morph-card-blue">
             <span class="icon-badge bg-gradient-primary text-white"><i class="bi bi-cloud-check"></i></span>
             <div>
-              <div class="fw-semibold">Autentikasi database</div>
-              <small class="text-muted">Memverifikasi terhadap tabel <code>users</code> &amp; status aktif.</small>
+              <div class="fw-semibold">Autentikasi DB</div>
+              <small class="text-muted">Terhubung langsung ke tabel <code>users</code> Sultra.</small>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6">
-          <div class="info-tile">
-            <span class="icon-badge bg-gradient-pink text-white"><i class="bi bi-stars"></i></span>
+        <div class="col-12 col-md-4">
+          <div class="info-tile morph-card morph-card-cyan">
+            <span class="icon-badge bg-gradient-cyan text-white"><i class="bi bi-stars"></i></span>
             <div>
-              <div class="fw-semibold">Desain BPS</div>
-              <small class="text-muted">Panel abstrak bertema BPS tanpa aset biner.</small>
+              <div class="fw-semibold">Tema Biru</div>
+              <small class="text-muted">Aksen laut Kendari yang modern dan atraktif.</small>
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="info-tile highlight-tile">
+        <div class="col-12 col-md-4">
+          <div class="info-tile morph-card morph-card-navy highlight-tile">
             <span class="icon-badge bg-gradient-emerald text-white"><i class="bi bi-shield-lock"></i></span>
             <div class="flex-grow-1">
-              <div class="fw-semibold">Keamanan tambahan</div>
-              <small class="text-muted">Regenerasi sesi otomatis, password hash, dan penanda waktu login terakhir.</small>
+              <div class="fw-semibold">Aman &amp; Tercatat</div>
+              <small class="text-muted">Regenerasi sesi, hash password, dan last login.</small>
             </div>
             <span class="badge rounded-pill text-bg-success">Aktif</span>
           </div>

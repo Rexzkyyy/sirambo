@@ -1,2 +1,98 @@
 body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
 .table thead th { white-space: nowrap; }
+
+.auth-body {
+  background: radial-gradient(circle at 20% 20%, #ffe29f 0, transparent 25%),
+              radial-gradient(circle at 80% 0%, #ffa99f 0, transparent 30%),
+              linear-gradient(135deg, #0f172a, #1b2b52 45%, #0b1225);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.floating-shape {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.6;
+  animation: float 12s ease-in-out infinite;
+}
+
+.floating-shape.shape-1 { background: #65c3ff; top: 5%; left: 8%; }
+.floating-shape.shape-2 { background: #c084fc; bottom: 10%; right: 15%; animation-delay: 2s; }
+.floating-shape.shape-3 { background: #f472b6; top: 40%; right: 45%; animation-delay: 4s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-15px) scale(1.05); }
+}
+
+.hero-panel {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+}
+
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(99, 102, 241, 0.15), rgba(244, 114, 182, 0.15));
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #16a34a;
+  position: relative;
+  display: inline-block;
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(22, 163, 74, 0.5);
+  animation: pulse 1.6s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.7); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}

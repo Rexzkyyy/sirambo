@@ -1,6 +1,17 @@
 <?php
 require_once __DIR__ . '/../controllers/DashboardController.php';
+require_once __DIR__ . '/../controllers/AuthController.php';
 require_once __DIR__ . '/../controllers/WilayahController.php';
+
+$router->get('/login', function() {
+    (new AuthController())->showLogin();
+});
+$router->post('/login', function() {
+    (new AuthController())->login();
+});
+$router->get('/logout', function() {
+    (new AuthController())->logout();
+});
 
 $router->get('/', function() {
     (new DashboardController())->index();

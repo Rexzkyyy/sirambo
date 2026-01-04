@@ -1,7 +1,15 @@
 <?php $base = rtrim(BASE_URL, '/'); ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top app-navbar">
   <div class="container-fluid">
-    <a class="navbar-brand fw-semibold" href="<?= $base ?>/">PDRB Panel</a>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-light d-lg-none" id="sidebarToggle" type="button">
+        <i class="bi bi-list"></i>
+      </button>
+      <a class="navbar-brand fw-semibold" href="<?= $base ?>/">
+        <i class="bi bi-graph-up"></i> PDRB Panel
+      </a>
+    </div>
+
     <div class="d-flex align-items-center ms-auto text-white small gap-3">
       <?php $user = $_SESSION['user'] ?? null; ?>
       <?php

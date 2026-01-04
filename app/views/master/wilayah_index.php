@@ -1,19 +1,58 @@
 <?php $base = rtrim(BASE_URL, '/'); ?>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <div>
-    <h4 class="mb-0">Master Wilayah</h4>
-    <div class="text-muted small">Kelola mst_wilayah (prov/kab/kota)</div>
+<div class="row g-3 mb-3">
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="icon-circle bg-info-subtle text-info"><i class="bi bi-geo-alt"></i></div>
+          <span class="badge text-bg-info text-dark">Master</span>
+        </div>
+        <div class="fw-semibold">Master Wilayah</div>
+        <div class="text-muted small">Kelola mst_wilayah (prov/kab/kota)</div>
+      </div>
+    </div>
   </div>
-  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalWilayah"
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="icon-circle bg-success-subtle text-success"><i class="bi bi-plus-circle"></i></div>
+          <span class="badge text-bg-success">Modal</span>
+        </div>
+        <div class="fw-semibold">Tambah &amp; edit cepat</div>
+        <div class="text-muted small">Gunakan tombol <strong>Tambah</strong> atau ikon edit di tabel.</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <div class="icon-circle bg-warning-subtle text-warning"><i class="bi bi-info-circle"></i></div>
+          <span class="badge text-bg-light text-dark">Status</span>
+        </div>
+        <div class="fw-semibold">Aktif/non-aktif</div>
+        <div class="text-muted small">Centang opsi <em>Aktif</em> untuk mengatur ketersediaan wilayah.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+  <div>
+    <h4 class="mb-0">Daftar Wilayah</h4>
+    <div class="text-muted small">Tabel responsif dengan aksi inline</div>
+  </div>
+  <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalWilayah"
           onclick="openCreateWilayah()">
-    + Tambah
+    <i class="bi bi-plus-circle"></i> Tambah
   </button>
 </div>
 
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
   <div class="table-responsive">
-    <table class="table table-striped table-hover align-middle mb-0">
+    <table class="table table-hover align-middle mb-0">
       <thead class="table-light">
         <tr>
           <th>Kode</th>
@@ -21,28 +60,28 @@
           <th>Level</th>
           <th>Kode Induk</th>
           <th>Aktif</th>
-          <th style="width:140px;">Aksi</th>
+          <th style="width:180px;">Aksi</th>
         </tr>
       </thead>
       <tbody>
       <?php foreach ($rows as $r): ?>
         <tr>
-          <td class="fw-semibold"><?= htmlspecialchars($r['kode_wilayah']) ?></td>
+          <td class="fw-semibold text-primary"><?= htmlspecialchars($r['kode_wilayah']) ?></td>
           <td><?= htmlspecialchars($r['nama_wilayah']) ?></td>
           <td><span class="badge text-bg-secondary"><?= htmlspecialchars($r['level_wilayah']) ?></span></td>
           <td><?= htmlspecialchars($r['kode_induk'] ?? '-') ?></td>
           <td><?= $r['is_active'] ? 'Ya' : 'Tidak' ?></td>
-          <td>
+          <td class="d-flex flex-wrap gap-2">
             <button class="btn btn-sm btn-outline-primary"
               data-bs-toggle="modal" data-bs-target="#modalWilayah"
               onclick='openEditWilayah(<?= json_encode($r, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>)'>
-              Edit
+              <i class="bi bi-pencil"></i> Edit
             </button>
 
             <form method="POST" action="<?= $base ?>/wilayah/delete" class="d-inline"
                   onsubmit="return confirm('Hapus wilayah ini?')">
               <input type="hidden" name="kode_wilayah" value="<?= htmlspecialchars($r['kode_wilayah']) ?>">
-              <button class="btn btn-sm btn-outline-danger">Hapus</button>
+              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> Hapus</button>
             </form>
           </td>
         </tr>
@@ -54,7 +93,7 @@
 
 <!-- Modal Create/Edit -->
 <div class="modal fade" id="modalWilayah" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <form class="modal-content" method="POST" id="formWilayah">
       <div class="modal-header">
         <h5 class="modal-title" id="modalTitle">Tambah Wilayah</h5>

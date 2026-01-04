@@ -1,6 +1,91 @@
 body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
 .table thead th { white-space: nowrap; }
 
+.app-body {
+  background: #f4f6fb;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: radial-gradient(circle at 10% 10%, rgba(13, 110, 253, 0.08), transparent 25%),
+              radial-gradient(circle at 90% 20%, rgba(25, 135, 84, 0.06), transparent 25%),
+              #f8fafc;
+}
+
+.app-navbar {
+  backdrop-filter: blur(10px);
+}
+
+.app-sidebar {
+  min-height: calc(100vh - 64px);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1040;
+}
+
+.app-sidebar .list-group-item {
+  border: none;
+  padding: 0.9rem 1.25rem;
+}
+
+.app-sidebar .list-group-item.active {
+  background: linear-gradient(90deg, rgba(13, 110, 253, 0.12), transparent 80%);
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.app-sidebar .list-group-title {
+  letter-spacing: 0.08em;
+}
+
+.app-main {
+  position: relative;
+}
+
+.page-heading .breadcrumb {
+  margin-bottom: 0;
+}
+
+.page-heading h5 {
+  margin: 0;
+}
+
+.icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+}
+
+.app-footer {
+  background: #fff;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    position: fixed;
+    inset: 64px auto 0 0;
+    width: 260px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    transform: translateX(-100%);
+    background: #fff;
+  }
+
+  .app-sidebar.show {
+    transform: translateX(0);
+  }
+
+  .app-main .container-fluid {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+}
+
 .auth-body {
   background: radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.26) 0, transparent 28%),
               radial-gradient(circle at 82% 12%, rgba(37, 99, 235, 0.24) 0, transparent 32%),

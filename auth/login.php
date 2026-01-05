@@ -1,4 +1,76 @@
+<?php
+// proses login
+if (session_status() === PHP_SESSION_NONE) session_start();
 
+require_once __DIR__ . '/../config/config.php';
+
+// redirect jika sudah login
+if (isset($_SESSION['id_user'])) {
+    header('Location: /sirambo/pages/dashboard.php');
+    exit();
+}
+
+// siapkan token CSRF
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        $error = 'Token tidak valid. Silakan coba lagi.';
+    } else {
+        $username = trim($_POST['username'] ?? '');
+        $password = $_POST['password'] ?? '';
+
+        if ($username === '' || $password === '') {
+            $error = 'Username dan password wajib diisi.';
+        } else {
+            $stmt = $conn->prepare('SELECT id_user, username, email, password, role, kode_wilayah, is_active FROM users WHERE (username = ? OR email = ?) LIMIT 1');
+            if ($stmt) {
+                $stmt->bind_param('ss', $username, $username);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $user = $result->fetch_assoc();
+
+                if ($user) {
+                    $storedPassword = (string)$user['password'];
+                    $isPasswordValid = password_verify($password, $storedPassword) || hash_equals($storedPassword, (string)$password);
+
+                    if (!$user['is_active']) {
+                        $error = 'Akun tidak aktif. Hubungi admin.';
+                    } elseif ($isPasswordValid) {
+                        $_SESSION['id_user'] = $user['id_user'];
+                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['role'] = $user['role'];
+                        $_SESSION['kode_wilayah'] = $user['kode_wilayah'];
+
+                        $update = $conn->prepare('UPDATE users SET last_login = NOW() WHERE id_user = ?');
+                        if ($update) {
+                            $update->bind_param('s', $user['id_user']);
+                            $update->execute();
+                            $update->close();
+                        }
+
+                        header('Location: /sirambo/pages/dashboard.php');
+                        exit();
+                    } else {
+                        $error = 'Username atau password salah.';
+                    }
+                } else {
+                    $error = 'Username atau password salah.';
+                }
+
+                $stmt->close();
+            } else {
+                $error = 'Koneksi database gagal. Coba beberapa saat lagi.';
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>

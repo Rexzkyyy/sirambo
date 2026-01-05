@@ -72,10 +72,6 @@ include __DIR__ . "/../partials/navbar.php";
           </div>
         </div>
       </div>
-
-      <div class="text-muted small mt-3">
-        © <?= date("Y") ?> SIRAMBO — BPS Provinsi Sulawesi Tenggara
-      </div>
     </div>
   </main>
 </div>

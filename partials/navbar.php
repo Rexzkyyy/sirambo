@@ -1,60 +1,43 @@
 <?php
-// partials/navbar.php
-$user_name  = $_SESSION['nama_lengkap'] ?? "User";
-$user_email = $_SESSION['email'] ?? "bpsprov@example.go.id";
+/**
+ * Navbar Partial - Tema Navy
+ */
+$user_name = $_SESSION['nama_lengkap'] ?? "Pengguna";
 ?>
-<header class="sirambo-header shadow-sm">
-  <nav class="navbar navbar-expand-lg navbar-dark sirambo-topbar">
-    <div class="container-fluid gap-2">
-      <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-outline-light btn-icon d-lg-none" id="sidebarToggle" aria-label="Buka menu">
-          <i class="bi bi-list"></i>
-        </button>
-        <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="/sirambo/pages/dashboard.php">
-          <span class="sirambo-logo">S</span>
-          <div class="d-flex flex-column lh-1">
-            <span class="fw-bold">SIRAMBO</span>
-            <small class="text-white-50">Rilis & Rekonsiliasi PDRB</small>
-          </div>
-        </a>
-      </div>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="topNav">
-        <div class="ms-auto d-flex align-items-center flex-wrap gap-2">
-          <div class="sirambo-badge text-white d-none d-lg-flex align-items-center gap-2">
-            <i class="bi bi-geo-alt"></i>
-            <div class="lh-1">
-              <div class="fw-semibold">BPS Provinsi Sulawesi Tenggara</div>
-              <small class="text-white-75">Data rilis internal</small>
-            </div>
-          </div>
-
-          <div class="sirambo-quickaction d-none d-lg-inline-flex align-items-center gap-1">
-            <i class="bi bi-lightning-charge-fill text-warning"></i>
-            <span>Shortcut</span>
-          </div>
-
-          <div class="dropdown">
-            <button class="btn btn-light btn-sm dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
-              <i class="bi bi-person-circle text-primary"></i>
-              <span class="text-start">
-                <span class="d-block fw-semibold text-dark"><?= htmlspecialchars($user_name) ?></span>
-                <small class="text-muted"><?= htmlspecialchars($user_email) ?></small>
-              </span>
+<header class="sirambo-navbar sticky-top shadow-none">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <!-- Toggle untuk Mobile -->
+            <button class="btn btn-light d-lg-none border-0 shadow-none" id="sidebarToggle">
+                <i class="bi bi-list fs-4"></i>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-              <li class="dropdown-header small text-muted">Akun</li>
-              <li><a class="dropdown-item" href="/sirambo/pages/users.php"><i class="bi bi-people me-2"></i>Manajemen User</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="/sirambo/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
-            </ul>
-          </div>
+            <h5 class="mb-0 fw-bold text-dark d-none d-md-block"><?= htmlspecialchars($title) ?></h5>
         </div>
-      </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <!-- Search atau Info Status -->
+            <div class="d-none d-lg-flex align-items-center bg-light px-3 py-1 rounded-pill border">
+                <i class="bi bi-calendar3 text-primary me-2"></i>
+                <small class="fw-medium text-muted"><?= date('d M Y') ?></small>
+            </div>
+
+            <!-- User Menu -->
+            <div class="dropdown">
+                <button class="btn btn-white border rounded-pill d-flex align-items-center gap-2 px-3 py-1 shadow-sm" data-bs-toggle="dropdown">
+                    <div class="bg-navy-primary rounded-circle text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: #0f172a;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <span class="fw-semibold small d-none d-sm-inline"><?= htmlspecialchars($user_name) ?></span>
+                    <i class="bi bi-chevron-down small opacity-50"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2 p-2 rounded-4">
+                    <li><h6 class="dropdown-header small text-uppercase fw-bold opacity-50">Akun Saya</h6></li>
+                    <li><a class="dropdown-item py-2 rounded-3" href="/sirambo/pages/profile.php"><i class="bi bi-person me-2"></i>Profil</a></li>
+                    <li><a class="dropdown-item py-2 rounded-3" href="/sirambo/pages/settings.php"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
+                    <li><hr class="dropdown-divider opacity-50"></li>
+                    <li><a class="dropdown-item py-2 rounded-3 text-danger" href="/sirambo/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </nav>
 </header>

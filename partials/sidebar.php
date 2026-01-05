@@ -1,52 +1,80 @@
 <?php
-// partials/sidebar.php
-function active($key, $page) { return $key === $page ? "active" : ""; }
-
-$user_name  = $_SESSION['nama_lengkap'] ?? "User";
-$user_unit  = $_SESSION['unit'] ?? "Tim Statistik PDRB";
+/**
+ * Sidebar Partial - Tema Navy
+ */
+if (!function_exists('active')) {
+    function active($key, $currentPage) {
+        return $key === $currentPage ? "active" : "";
+    }
+}
 ?>
 <aside class="sirambo-sidebar" id="siramboSidebar">
-  <div class="sidebar-inner">
-    <div class="d-flex align-items-start justify-content-between mb-3">
-      <div class="d-flex align-items-center gap-2">
-        <div class="avatar-soft">
-          <i class="bi bi-person-fill"></i>
+    <!-- Brand Section -->
+    <div class="p-4 d-flex align-items-center gap-3">
+        <div class="sirambo-logo-square">S</div>
+        <div class="lh-1">
+            <div class="fw-bold text-white tracking-wide fs-5">SIRAMBO</div>
+            <small class="text-white-50" style="font-size: 0.65rem;">BPS Prov. Sultra</small>
         </div>
-        <div class="lh-sm">
-          <div class="fw-semibold"><?= htmlspecialchars($user_name) ?></div>
-          <small class="text-muted"><?= htmlspecialchars($user_unit) ?></small>
+    </div>
+
+    <!-- Navigasi Utama -->
+    <div class="flex-grow-1 px-3 mt-3 overflow-auto">
+        <p class="text-uppercase text-white-50 small fw-bold mb-3 px-3" style="font-size: 0.7rem; letter-spacing: 1px; opacity: 0.3;">Navigasi Utama</p>
+        
+        <nav class="nav flex-column gap-1">
+            <a href="/sirambo/pages/dashboard.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('dashboard', $page) ?>">
+                <i class="bi bi-grid-1x2"></i> <span>Dashboard</span>
+            </a>
+            
+            <a href="/sirambo/pages/pdrb.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('pdrb', $page) ?>">
+                <i class="bi bi-bar-chart-line"></i> <span>Rilis & Rekonsiliasi</span>
+            </a>
+
+            <a href="/sirambo/pages/users.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('users', $page) ?>">
+                <i class="bi bi-people"></i> <span>Manajemen User</span>
+            </a>
+        </nav>
+
+        <p class="text-uppercase text-white-50 small fw-bold mt-5 mb-3 px-3" style="font-size: 0.7rem; letter-spacing: 1px; opacity: 0.3;">Operasional</p>
+        <nav class="nav flex-column gap-1">
+            <a href="#" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3">
+                <i class="bi bi-file-earmark-text"></i> <span>Laporan Bulanan</span>
+            </a>
+            <a href="#" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3">
+                <i class="bi bi-info-circle"></i> <span>Pusat Bantuan</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-top border-white border-opacity-10">
+        <div class="d-grid">
+            <button class="btn btn-primary btn-sm rounded-3 py-2" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <i class="bi bi-arrow-up-circle me-1"></i> Ke Atas
+            </button>
         </div>
-      </div>
-      <button class="btn btn-sm btn-light border d-lg-none" id="sidebarClose" aria-label="Tutup menu">
-        <i class="bi bi-x-lg"></i>
-      </button>
     </div>
-
-    <div class="sidebar-block mb-4">
-      <div class="sidebar-title">Menu</div>
-
-      <a class="sirambo-nav <?= active('dashboard', $page) ?>" href="/sirambo/pages/dashboard.php">
-        <i class="bi bi-speedometer2"></i> Dashboard
-      </a>
-
-      <a class="sirambo-nav <?= active('pdrb', $page) ?>" href="/sirambo/pages/pdrb.php">
-        <i class="bi bi-bar-chart-line"></i> Rilis & Rekonsiliasi PDRB
-      </a>
-
-      <a class="sirambo-nav <?= active('users', $page) ?>" href="/sirambo/pages/users.php">
-        <i class="bi bi-people"></i> User
-      </a>
-    </div>
-
-    <div class="sidebar-block">
-      <div class="sidebar-title">Shortcut</div>
-      <div class="d-grid gap-2">
-        <a class="btn btn-outline-primary btn-sm" href="/sirambo/pages/pdrb.php"><i class="bi bi-plus-circle me-1"></i>Catat rilis</a>
-        <a class="btn btn-outline-secondary btn-sm" href="/sirambo/pages/users.php"><i class="bi bi-people-fill me-1"></i>Kelola user</a>
-        <button class="btn btn-light btn-sm" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-          <i class="bi bi-arrow-up me-1"></i> Ke atas
-        </button>
-      </div>
-    </div>
-  </div>
 </aside>
+
+<style>
+    .nav-link-custom {
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: all 0.2s;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+    .nav-link-custom:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .nav-link-custom.active {
+        color: #fff;
+        background: var(--accent-blue);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+    .nav-link-custom i {
+        font-size: 1.1rem;
+    }
+</style>

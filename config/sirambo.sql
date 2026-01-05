@@ -1,0 +1,437 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 05 Jan 2026 pada 01.46
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `sirambo`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fact_pdrb_fenomena`
+--
+
+CREATE TABLE `fact_pdrb_fenomena` (
+  `id_fenomena` bigint(20) NOT NULL,
+  `id_transaksi` bigint(20) NOT NULL,
+  `kode_wilayah` varchar(10) NOT NULL,
+  `id_periode` int(11) NOT NULL,
+  `id_komponen` int(11) NOT NULL,
+  `deskripsi_fenomena` text NOT NULL,
+  `kategori_fenomena` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `fact_pdrb_fenomena`
+--
+
+INSERT INTO `fact_pdrb_fenomena` (`id_fenomena`, `id_transaksi`, `kode_wilayah`, `id_periode`, `id_komponen`, `deskripsi_fenomena`, `kategori_fenomena`) VALUES
+(1, 1, '7471', 3, 3, 'Produksi tanaman pangan meningkat akibat musim hujan panjang', 'Cuaca'),
+(2, 3, '7401', 3, 5, 'Peningkatan ekspor nikel ke Tiongkok', 'Ekspor');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `fact_pdrb_transaksi`
+--
+
+CREATE TABLE `fact_pdrb_transaksi` (
+  `id_transaksi` bigint(20) NOT NULL,
+  `kode_wilayah` varchar(10) NOT NULL,
+  `id_periode` int(11) NOT NULL,
+  `id_komponen` int(11) NOT NULL,
+  `nilai_adhb` decimal(20,2) DEFAULT NULL,
+  `nilai_adhk` decimal(20,2) DEFAULT NULL,
+  `status_data` enum('INPUT','RECONCILED','FINAL') NOT NULL DEFAULT 'INPUT'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `fact_pdrb_transaksi`
+--
+
+INSERT INTO `fact_pdrb_transaksi` (`id_transaksi`, `kode_wilayah`, `id_periode`, `id_komponen`, `nilai_adhb`, `nilai_adhk`, `status_data`) VALUES
+(1, '7471', 3, 3, 1250000000.00, 980000000.00, 'INPUT'),
+(2, '7471', 3, 4, 980000000.00, 820000000.00, 'INPUT'),
+(3, '7401', 3, 5, 4500000000.00, 3900000000.00, 'RECONCILED');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `log_audit_data`
+--
+
+CREATE TABLE `log_audit_data` (
+  `id_log` bigint(20) NOT NULL,
+  `id_transaksi` bigint(20) NOT NULL,
+  `tipe_aksi` enum('INSERT','UPDATE','DELETE') NOT NULL,
+  `kolom_berubah` varchar(50) DEFAULT NULL,
+  `nilai_lama` decimal(20,2) DEFAULT NULL,
+  `nilai_baru` decimal(20,2) DEFAULT NULL,
+  `alasan_perubahan` varchar(255) DEFAULT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `waktu_aksi` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fase_rekonsiliasi` enum('MANDIRI','PRA-REKON','REKON-PROV') NOT NULL DEFAULT 'MANDIRI'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `log_audit_data`
+--
+
+INSERT INTO `log_audit_data` (`id_log`, `id_transaksi`, `tipe_aksi`, `kolom_berubah`, `nilai_lama`, `nilai_baru`, `alasan_perubahan`, `user_id`, `waktu_aksi`, `fase_rekonsiliasi`) VALUES
+(1, 1, 'UPDATE', 'nilai_adhb', 1200000000.00, 1250000000.00, 'Revisi hasil survei lapangan', 'kendari', '2026-01-02 02:28:44', 'MANDIRI'),
+(2, 3, 'UPDATE', 'status_data', NULL, NULL, 'Finalisasi hasil rekonsiliasi provinsi', 'prov74', '2026-01-02 02:28:44', 'REKON-PROV');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `mst_wilayah`
+--
+
+CREATE TABLE `mst_wilayah` (
+  `kode_wilayah` varchar(10) NOT NULL,
+  `nama_wilayah` varchar(100) NOT NULL,
+  `kode_induk` varchar(10) DEFAULT NULL,
+  `level_wilayah` enum('PROVINSI','KABUPATEN','KOTA') NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `mst_wilayah`
+--
+
+INSERT INTO `mst_wilayah` (`kode_wilayah`, `nama_wilayah`, `kode_induk`, `level_wilayah`, `is_active`) VALUES
+('74', 'Sulawesi Tenggara', NULL, 'PROVINSI', 1),
+('7401', 'Kabupaten Konawe', '74', 'KABUPATEN', 1),
+('7402', 'Kabupaten Kolaka', '74', 'KABUPATEN', 1),
+('7471', 'Kota Kendari', '74', 'KOTA', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ref_komponen_pdrb`
+--
+
+CREATE TABLE `ref_komponen_pdrb` (
+  `id_komponen` int(11) NOT NULL,
+  `kode_publikasi` varchar(20) DEFAULT NULL,
+  `nama_komponen` varchar(255) NOT NULL,
+  `id_induk` int(11) DEFAULT NULL,
+  `jenis_pendekatan` enum('LAPANGAN_USAHA','PENGELUARAN') NOT NULL,
+  `level_hierarki` int(11) NOT NULL DEFAULT 1,
+  `is_calculable` tinyint(1) NOT NULL DEFAULT 1,
+  `id_versi_kbli` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `ref_komponen_pdrb`
+--
+
+INSERT INTO `ref_komponen_pdrb` (`id_komponen`, `kode_publikasi`, `nama_komponen`, `id_induk`, `jenis_pendekatan`, `level_hierarki`, `is_calculable`, `id_versi_kbli`) VALUES
+(1, 'A', 'Pertanian, Kehutanan dan Perikanan', NULL, 'LAPANGAN_USAHA', 1, 0, 2),
+(2, 'B', 'Pertambangan dan Penggalian', NULL, 'LAPANGAN_USAHA', 1, 0, 2),
+(3, 'A', 'Pertanian, Kehutanan dan Perikanan', NULL, 'LAPANGAN_USAHA', 1, 0, 2),
+(4, 'B', 'Pertambangan dan Penggalian', NULL, 'LAPANGAN_USAHA', 1, 0, 2),
+(5, 'A01', 'Pertanian Tanaman Pangan', 1, 'LAPANGAN_USAHA', 2, 1, 2),
+(6, 'A02', 'Perkebunan', 1, 'LAPANGAN_USAHA', 2, 1, 2),
+(7, 'B01', 'Pertambangan Nikel', 2, 'LAPANGAN_USAHA', 2, 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ref_periode_laporan`
+--
+
+CREATE TABLE `ref_periode_laporan` (
+  `id_periode` int(11) NOT NULL,
+  `tahun` year(4) NOT NULL,
+  `triwulan` tinyint(4) NOT NULL,
+  `status_input` enum('OPEN','LOCKED') NOT NULL DEFAULT 'OPEN',
+  `tenggat_waktu` datetime DEFAULT NULL,
+  `deskripsi` varchar(100) DEFAULT NULL
+) ;
+
+--
+-- Dumping data untuk tabel `ref_periode_laporan`
+--
+
+INSERT INTO `ref_periode_laporan` (`id_periode`, `tahun`, `triwulan`, `status_input`, `tenggat_waktu`, `deskripsi`) VALUES
+(1, '2025', 1, 'LOCKED', '2025-04-15 23:59:59', 'Triwulan I 2025'),
+(2, '2025', 2, 'LOCKED', '2025-07-15 23:59:59', 'Triwulan II 2025'),
+(3, '2025', 3, 'OPEN', '2025-10-15 23:59:59', 'Triwulan III 2025'),
+(4, '2025', 4, 'OPEN', '2026-01-15 23:59:59', 'Triwulan IV 2025');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `ref_versi_statistik`
+--
+
+CREATE TABLE `ref_versi_statistik` (
+  `id_versi` int(11) NOT NULL,
+  `nama_versi` varchar(50) NOT NULL,
+  `tahun_dasar` year(4) NOT NULL,
+  `berlaku_mulai` date NOT NULL,
+  `berlaku_sampai` date DEFAULT NULL,
+  `status_aktif` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `ref_versi_statistik`
+--
+
+INSERT INTO `ref_versi_statistik` (`id_versi`, `nama_versi`, `tahun_dasar`, `berlaku_mulai`, `berlaku_sampai`, `status_aktif`) VALUES
+(1, 'PDRB ADHB 2010', '2010', '2011-01-01', '2022-12-31', 0),
+(2, 'PDRB ADHB 2020', '2020', '2023-01-01', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `status_input_wilayah`
+--
+
+CREATE TABLE `status_input_wilayah` (
+  `id_status` bigint(20) NOT NULL,
+  `id_periode` int(11) NOT NULL,
+  `kode_wilayah` varchar(10) NOT NULL,
+  `persentase_selesai` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `status_finalisasi` enum('DRAFT','SUBMITTED','APPROVED') NOT NULL DEFAULT 'DRAFT',
+  `waktu_submit` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `status_input_wilayah`
+--
+
+INSERT INTO `status_input_wilayah` (`id_status`, `id_periode`, `kode_wilayah`, `persentase_selesai`, `status_finalisasi`, `waktu_submit`) VALUES
+(1, 3, '7471', 65.00, 'DRAFT', NULL),
+(2, 3, '7401', 100.00, 'APPROVED', '2025-10-10 14:00:00'),
+(3, 3, '74', 80.00, 'SUBMITTED', '2025-10-12 16:30:00');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `users`
+--
+
+CREATE TABLE `users` (
+  `id_user` varchar(50) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(120) NOT NULL,
+  `password` int(11) NOT NULL,
+  `role` enum('ADMIN','PROV','KABKOTA','VIEWER') NOT NULL DEFAULT 'VIEWER',
+  `kode_wilayah` varchar(10) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `last_login` datetime DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `role`, `kode_wilayah`, `is_active`, `last_login`, `created_at`, `updated_at`) VALUES
+('kendari', 'eky', 'kendari@sirambo.id', 123, 'KABKOTA', '7471', 1, NULL, '2026-01-02 02:25:49', '2026-01-04 22:07:52'),
+('prov74', '', 'prov@sirambo.id', 0, 'PROV', '74', 1, NULL, '2026-01-02 02:25:49', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `fact_pdrb_fenomena`
+--
+ALTER TABLE `fact_pdrb_fenomena`
+  ADD PRIMARY KEY (`id_fenomena`),
+  ADD KEY `idx_fenomena_transaksi` (`id_transaksi`),
+  ADD KEY `idx_fenomena_wilayah_periode` (`kode_wilayah`,`id_periode`),
+  ADD KEY `fk_fenomena_periode` (`id_periode`),
+  ADD KEY `fk_fenomena_komponen` (`id_komponen`);
+
+--
+-- Indeks untuk tabel `fact_pdrb_transaksi`
+--
+ALTER TABLE `fact_pdrb_transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD UNIQUE KEY `uq_transaksi` (`kode_wilayah`,`id_periode`,`id_komponen`),
+  ADD KEY `idx_transaksi_periode` (`id_periode`),
+  ADD KEY `idx_transaksi_komponen` (`id_komponen`),
+  ADD KEY `idx_transaksi_status` (`status_data`);
+
+--
+-- Indeks untuk tabel `log_audit_data`
+--
+ALTER TABLE `log_audit_data`
+  ADD PRIMARY KEY (`id_log`),
+  ADD KEY `idx_audit_transaksi` (`id_transaksi`),
+  ADD KEY `idx_audit_user` (`user_id`),
+  ADD KEY `idx_audit_waktu` (`waktu_aksi`);
+
+--
+-- Indeks untuk tabel `mst_wilayah`
+--
+ALTER TABLE `mst_wilayah`
+  ADD PRIMARY KEY (`kode_wilayah`),
+  ADD KEY `idx_wilayah_induk` (`kode_induk`);
+
+--
+-- Indeks untuk tabel `ref_komponen_pdrb`
+--
+ALTER TABLE `ref_komponen_pdrb`
+  ADD PRIMARY KEY (`id_komponen`),
+  ADD KEY `idx_komponen_induk` (`id_induk`),
+  ADD KEY `idx_komponen_versi` (`id_versi_kbli`);
+
+--
+-- Indeks untuk tabel `ref_periode_laporan`
+--
+ALTER TABLE `ref_periode_laporan`
+  ADD PRIMARY KEY (`id_periode`),
+  ADD UNIQUE KEY `uq_periode` (`tahun`,`triwulan`);
+
+--
+-- Indeks untuk tabel `ref_versi_statistik`
+--
+ALTER TABLE `ref_versi_statistik`
+  ADD PRIMARY KEY (`id_versi`),
+  ADD UNIQUE KEY `uq_versi_nama_tahun` (`nama_versi`,`tahun_dasar`),
+  ADD KEY `idx_versi_aktif` (`status_aktif`,`berlaku_mulai`,`berlaku_sampai`);
+
+--
+-- Indeks untuk tabel `status_input_wilayah`
+--
+ALTER TABLE `status_input_wilayah`
+  ADD PRIMARY KEY (`id_status`),
+  ADD UNIQUE KEY `uq_status_wilayah` (`id_periode`,`kode_wilayah`),
+  ADD KEY `idx_status_periode` (`id_periode`),
+  ADD KEY `idx_status_wilayah` (`kode_wilayah`);
+
+--
+-- Indeks untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id_user`),
+  ADD UNIQUE KEY `uq_users_email` (`email`),
+  ADD KEY `idx_users_role` (`role`),
+  ADD KEY `idx_users_wilayah` (`kode_wilayah`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `fact_pdrb_fenomena`
+--
+ALTER TABLE `fact_pdrb_fenomena`
+  MODIFY `id_fenomena` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `fact_pdrb_transaksi`
+--
+ALTER TABLE `fact_pdrb_transaksi`
+  MODIFY `id_transaksi` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `log_audit_data`
+--
+ALTER TABLE `log_audit_data`
+  MODIFY `id_log` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `ref_komponen_pdrb`
+--
+ALTER TABLE `ref_komponen_pdrb`
+  MODIFY `id_komponen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `ref_periode_laporan`
+--
+ALTER TABLE `ref_periode_laporan`
+  MODIFY `id_periode` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `ref_versi_statistik`
+--
+ALTER TABLE `ref_versi_statistik`
+  MODIFY `id_versi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `status_input_wilayah`
+--
+ALTER TABLE `status_input_wilayah`
+  MODIFY `id_status` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `fact_pdrb_fenomena`
+--
+ALTER TABLE `fact_pdrb_fenomena`
+  ADD CONSTRAINT `fk_fenomena_komponen` FOREIGN KEY (`id_komponen`) REFERENCES `ref_komponen_pdrb` (`id_komponen`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fenomena_periode` FOREIGN KEY (`id_periode`) REFERENCES `ref_periode_laporan` (`id_periode`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fenomena_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `fact_pdrb_transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_fenomena_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `fact_pdrb_transaksi`
+--
+ALTER TABLE `fact_pdrb_transaksi`
+  ADD CONSTRAINT `fk_transaksi_komponen` FOREIGN KEY (`id_komponen`) REFERENCES `ref_komponen_pdrb` (`id_komponen`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_transaksi_periode` FOREIGN KEY (`id_periode`) REFERENCES `ref_periode_laporan` (`id_periode`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_transaksi_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `log_audit_data`
+--
+ALTER TABLE `log_audit_data`
+  ADD CONSTRAINT `fk_audit_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `fact_pdrb_transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `mst_wilayah`
+--
+ALTER TABLE `mst_wilayah`
+  ADD CONSTRAINT `fk_wilayah_induk` FOREIGN KEY (`kode_induk`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `ref_komponen_pdrb`
+--
+ALTER TABLE `ref_komponen_pdrb`
+  ADD CONSTRAINT `fk_komponen_induk` FOREIGN KEY (`id_induk`) REFERENCES `ref_komponen_pdrb` (`id_komponen`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_komponen_versi` FOREIGN KEY (`id_versi_kbli`) REFERENCES `ref_versi_statistik` (`id_versi`) ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `status_input_wilayah`
+--
+ALTER TABLE `status_input_wilayah`
+  ADD CONSTRAINT `fk_status_periode` FOREIGN KEY (`id_periode`) REFERENCES `ref_periode_laporan` (`id_periode`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_status_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_wilayah` FOREIGN KEY (`kode_wilayah`) REFERENCES `mst_wilayah` (`kode_wilayah`) ON DELETE SET NULL ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

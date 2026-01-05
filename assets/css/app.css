@@ -1,0 +1,67 @@
+:root{
+  --sirambo: #0b3a7e;
+  --sirambo-2:#0e4aa3;
+  --card-radius: 16px;
+}
+
+.sirambo-topbar{
+  background: linear-gradient(135deg, var(--sirambo), var(--sirambo-2));
+  box-shadow: 0 10px 30px rgba(11,58,126,.25);
+}
+
+.sirambo-logo{
+  width: 28px; height: 28px;
+  display:inline-grid; place-items:center;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.sirambo-layout{
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 56px);
+}
+
+.sirambo-sidebar{
+  background: #ffffff;
+  border-right: 1px solid rgba(0,0,0,.06);
+}
+
+.sirambo-nav{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration:none;
+  color:#1f2937;
+  margin-bottom: 6px;
+  transition: .15s;
+}
+
+.sirambo-nav:hover{
+  background:#f3f4f6;
+}
+
+.sirambo-nav.active{
+  background: rgba(11,58,126,.08);
+  color: var(--sirambo);
+  font-weight: 600;
+}
+
+.sirambo-content{
+  padding: 18px;
+}
+
+.sirambo-card{
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: var(--card-radius);
+  box-shadow: 0 12px 26px rgba(2,6,23,.06);
+}
+
+@media (max-width: 992px){
+  .sirambo-layout{ grid-template-columns: 1fr; }
+  .sirambo-sidebar{ display:none; }
+}

@@ -3,6 +3,7 @@
  * User Management Page - Tema Navy Blue
  * Menggunakan kolom: id_user, username, email, role, kode_wilayah, is_active, last_login
  * Wilayah dari tabel mst_wilayah
+ * Dilengkapi dengan fitur ekspor Excel/PDF
  */
 require_once __DIR__ . "/../partials/auth_guard.php";
 require_once __DIR__ . '/../config/config.php';
@@ -156,9 +157,17 @@ include __DIR__ . "/../partials/header.php";
                     <h4 class="fw-bold text-navy-primary mb-0">Kelola Pengguna</h4>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
-                    <button class="btn btn-outline-navy btn-sm border-secondary-subtle bg-white shadow-sm rounded-3">
-                        <i class="bi bi-download me-1"></i> Ekspor
-                    </button>
+                    <!-- Dropdown Ekspor -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-navy btn-sm border-secondary-subtle bg-white shadow-sm rounded-3 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-download me-1"></i> Ekspor
+                        </button>
+                        <ul class="dropdown-menu shadow border-0">
+                            <li><a class="dropdown-item py-2" href="actions/export_users.php?type=excel&<?= http_build_query($_GET) ?>"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Ekspor ke Excel</a></li>
+                            <li><a class="dropdown-item py-2" href="actions/export_users.php?type=pdf&<?= http_build_query($_GET) ?>" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Ekspor ke PDF (Cetak)</a></li>
+                        </ul>
+                    </div>
+                    
                     <button class="btn btn-primary btn-sm px-3 rounded-3 shadow-sm border-0" data-bs-toggle="modal" data-bs-target="#modalAddUser">
                         <i class="bi bi-person-plus-fill me-1"></i> Tambah User
                     </button>

@@ -5,8 +5,8 @@
  * Wilayah dari tabel mst_wilayah
  * Dilengkapi dengan fitur ekspor Excel/PDF
  */
-require_once __DIR__ . "/../partials/auth_guard.php";
-require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . "/../../partials/auth_guard.php";
+require_once __DIR__ . '/../../config/config.php';
 
 $title = "Manajemen Pengguna";
 $page = "users";
@@ -132,16 +132,16 @@ if ($result_active) {
     $active_users = $row_active['active'];
 }
 
-include __DIR__ . "/../partials/header.php";
+include __DIR__ . "/../../partials/header.php";
 ?>
 <div class="sirambo-wrapper">
     <!-- Sidebar -->
-    <?php include __DIR__ . "/../partials/sidebar.php"; ?>
+    <?php include __DIR__ . "/../../partials/sidebar.php"; ?>
 
     <!-- Bagian Utama -->
     <div class="sirambo-main">
         <!-- Navbar -->
-        <?php include __DIR__ . "/../partials/navbar.php"; ?>
+        <?php include __DIR__ . "/../../partials/navbar.php"; ?>
 
         <!-- Konten Utama -->
         <main class="sirambo-content-area">
@@ -150,7 +150,7 @@ include __DIR__ . "/../partials/header.php";
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-1">
-                            <li class="breadcrumb-item small"><a href="dashboard.php" class="text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item small"><a href="../dashboard.php" class="text-decoration-none">Dashboard</a></li>
                             <li class="breadcrumb-item small active" aria-current="page">Pengguna</li>
                         </ol>
                     </nav>
@@ -163,8 +163,8 @@ include __DIR__ . "/../partials/header.php";
                             <i class="bi bi-download me-1"></i> Ekspor
                         </button>
                         <ul class="dropdown-menu shadow border-0">
-                            <li><a class="dropdown-item py-2" href="actions/export_users.php?type=excel&<?= http_build_query($_GET) ?>"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Ekspor ke Excel</a></li>
-                            <li><a class="dropdown-item py-2" href="actions/export_users.php?type=pdf&<?= http_build_query($_GET) ?>" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Ekspor ke PDF (Cetak)</a></li>
+                            <li><a class="dropdown-item py-2" href="export_users.php?type=excel&<?= http_build_query($_GET) ?>"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Ekspor ke Excel</a></li>
+                            <li><a class="dropdown-item py-2" href="export_users.php?type=pdf&<?= http_build_query($_GET) ?>" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Ekspor ke PDF (Cetak)</a></li>
                         </ul>
                     </div>
                     
@@ -471,7 +471,7 @@ include __DIR__ . "/../partials/header.php";
         </main>
 
         <!-- Footer -->
-        <?php include __DIR__ . "/../partials/footer.php"; ?>
+        <?php include __DIR__ . "/../../partials/footer.php"; ?>
     </div>
 </div>
 
@@ -483,7 +483,7 @@ include __DIR__ . "/../partials/header.php";
                 <h5 class="modal-title fw-bold text-navy-primary" id="modalAddUserLabel">Tambah Pengguna Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="actions/user_add.php" method="POST" id="formAddUser">
+            <form action="user_add.php" method="POST" id="formAddUser">
                 <div class="modal-body pt-1">
                     <div class="mb-3">
                         <label for="username" class="form-label small fw-medium">Username <span class="text-danger">*</span></label>
@@ -540,7 +540,7 @@ include __DIR__ . "/../partials/header.php";
                 <h5 class="modal-title fw-bold text-navy-primary" id="modalEditUserLabel">Edit Pengguna</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="actions/user_update.php" method="POST" id="formEditUser">
+            <form action="user_update.php" method="POST" id="formEditUser">
                 <input type="hidden" id="edit_id" name="id">
                 <div class="modal-body pt-1">
                     <div class="mb-3">
@@ -647,7 +647,7 @@ include __DIR__ . "/../partials/header.php";
 <script>
 // Fungsi untuk mengedit user
 function editUser(id) {
-    fetch(`actions/user_get.php?id=${id}`)
+    fetch(`user_get.php?id=${id}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -674,7 +674,7 @@ function editUser(id) {
 // Fungsi untuk toggle status user
 function toggleStatus(id) {
     if (confirm('Apakah Anda yakin ingin mengubah status user ini?')) {
-        fetch('actions/user_toggle_status.php', {
+        fetch('user_toggle_status.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -699,7 +699,7 @@ function toggleStatus(id) {
 // Fungsi untuk reset password
 function resetPassword(id) {
     if (confirm('Reset password ke default (password123)?')) {
-        fetch('actions/user_reset_password.php', {
+        fetch('user_reset_password.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -723,7 +723,7 @@ function resetPassword(id) {
 // Fungsi untuk menghapus user
 function deleteUser(id) {
     if (confirm('Apakah Anda yakin ingin menghapus user ini? Tindakan ini tidak dapat dibatalkan.')) {
-        fetch('actions/user_delete.php', {
+        fetch('user_delete.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -768,7 +768,7 @@ document.getElementById('formEditUser')?.addEventListener('submit', function(e) 
     e.preventDefault();
     const formData = new FormData(this);
     
-    fetch('actions/user_update.php', {
+    fetch('user_update.php', {
         method: 'POST',
         body: formData
     })

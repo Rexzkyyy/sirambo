@@ -4,8 +4,8 @@
  * Menggunakan tabel: mst_wilayah
  * Kolom: kode_wilayah, nama_wilayah, kode_induk, level_wilayah, is_active
  */
-require_once __DIR__ . "/../partials/auth_guard.php";
-require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . "/../../partials/auth_guard.php";
+require_once __DIR__ . '/../../config/config.php';
 
 $title = "Master Wilayah";
 $page = "master_wilayah";
@@ -70,13 +70,13 @@ $stats = [
     'kabkota' => $conn->query("SELECT COUNT(*) as c FROM mst_wilayah WHERE level_wilayah = 2")->fetch_assoc()['c']
 ];
 
-include __DIR__ . "/../partials/header.php";
+include __DIR__ . "/../../partials/header.php";
 ?>
 <div class="sirambo-wrapper">
-    <?php include __DIR__ . "/../partials/sidebar.php"; ?>
+    <?php include __DIR__ . "/../../partials/sidebar.php"; ?>
 
     <div class="sirambo-main">
-        <?php include __DIR__ . "/../partials/navbar.php"; ?>
+        <?php include __DIR__ . "/../../partials/navbar.php"; ?>
 
         <main class="sirambo-content-area">
             <!-- Header -->
@@ -84,7 +84,7 @@ include __DIR__ . "/../partials/header.php";
                 <div>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-1">
-                            <li class="breadcrumb-item small"><a href="dashboard.php" class="text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item small"><a href="../dashboard.php" class="text-decoration-none">Dashboard</a></li>
                             <li class="breadcrumb-item small active">Master Wilayah</li>
                         </ol>
                     </nav>
@@ -96,8 +96,8 @@ include __DIR__ . "/../partials/header.php";
                             <i class="bi bi-download me-1"></i> Ekspor
                         </button>
                         <ul class="dropdown-menu shadow border-0">
-                            <li><a class="dropdown-item py-2" href="actions/export_wilayah.php?type=excel&<?= http_build_query($_GET) ?>"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Ekspor Excel</a></li>
-                            <li><a class="dropdown-item py-2" href="actions/export_wilayah.php?type=pdf&<?= http_build_query($_GET) ?>" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Cetak PDF</a></li>
+                            <li><a class="dropdown-item py-2" href="export_wilayah.php?type=excel&<?= http_build_query($_GET) ?>"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Ekspor Excel</a></li>
+                            <li><a class="dropdown-item py-2" href="export_wilayah.php?type=pdf&<?= http_build_query($_GET) ?>" target="_blank"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Cetak PDF</a></li>
                         </ul>
                     </div>
                     <button class="btn btn-primary btn-sm px-3 rounded-3 shadow-sm border-0" data-bs-toggle="modal" data-bs-target="#modalAddWilayah">
@@ -227,7 +227,7 @@ include __DIR__ . "/../partials/header.php";
                 </div>
             </div>
         </main>
-        <?php include __DIR__ . "/../partials/footer.php"; ?>
+        <?php include __DIR__ . "/../../partials/footer.php"; ?>
     </div>
 </div>
 
@@ -239,7 +239,7 @@ include __DIR__ . "/../partials/header.php";
                 <h5 class="modal-title fw-bold text-navy-primary">Tambah Wilayah Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="actions/wilayah_add.php" method="POST" id="formAddWilayah">
+            <form action="wilayah_add.php" method="POST" id="formAddWilayah">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label small fw-medium">Kode Wilayah <span class="text-danger">*</span></label>
@@ -285,7 +285,7 @@ include __DIR__ . "/../partials/header.php";
                 <h5 class="modal-title fw-bold text-navy-primary">Edit Wilayah</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="actions/wilayah_update.php" method="POST" id="formEditWilayah">
+            <form action="wilayah_update.php" method="POST" id="formEditWilayah">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label small fw-medium">Kode Wilayah</label>
@@ -388,7 +388,7 @@ document.querySelectorAll('.level-select').forEach(select => {
 });
 
 function editWilayah(kode) {
-    fetch('actions/wilayah_get.php?kode=' + kode)
+    fetch('wilayah_get.php?kode=' + kode)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -412,7 +412,7 @@ function editWilayah(kode) {
 }
 
 function viewDetailWilayah(kode) {
-    fetch('actions/wilayah_get.php?kode=' + kode)
+    fetch('wilayah_get.php?kode=' + kode)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -443,7 +443,7 @@ function viewDetailWilayah(kode) {
 
 function toggleStatusWilayah(kode) {
     if(confirm('Ubah status aktif wilayah ini?')) {
-        fetch('actions/wilayah_toggle.php', {
+        fetch('wilayah_toggle.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: 'kode_wilayah=' + kode
@@ -458,7 +458,7 @@ function toggleStatusWilayah(kode) {
 
 function deleteWilayah(kode) {
     if(confirm('Hapus wilayah ' + kode + '? Wilayah yang masih memiliki bawahan tidak dapat dihapus.')) {
-        fetch('actions/wilayah_delete.php', {
+        fetch('wilayah_delete.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: 'kode_wilayah=' + kode

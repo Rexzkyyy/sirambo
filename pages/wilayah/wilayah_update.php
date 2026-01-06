@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Validasi Input Dasar
     if (empty($_POST['kode_wilayah']) || empty($_POST['nama_wilayah']) || empty($_POST['level_wilayah'])) {
         $_SESSION['error'] = 'Kode, Nama, dan Level wilayah wajib diisi';
-        header('Location: ../master-wilayah.php');
+        header('Location: master-wilayah.php');
         exit;
     }
 
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Jika Level 2 (Kab/Kota), wajib punya induk Level 1
         if (empty($kode_induk)) {
             $_SESSION['error'] = 'Kabupaten/Kota wajib memiliki Wilayah Induk (Provinsi)';
-            header('Location: ../master-wilayah.php');
+            header('Location: master-wilayah.php');
             exit;
         }
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($res_induk->num_rows === 0) {
             $_SESSION['error'] = 'Wilayah Induk tidak valid atau bukan merupakan tingkat Provinsi';
-            header('Location: ../master-wilayah.php');
+            header('Location: master-wilayah.php');
             exit;
         }
         
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 3. Pastikan kode wilayah tidak menjadi induk bagi dirinya sendiri
     if ($kode_wilayah === $kode_induk) {
         $_SESSION['error'] = 'Wilayah tidak boleh menjadi induk bagi dirinya sendiri';
-        header('Location: ../master-wilayah.php');
+        header('Location: master-wilayah.php');
         exit;
     }
 
@@ -84,10 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect kembali ke halaman Master Wilayah
-    header('Location: ../master-wilayah.php');
+    header('Location: master-wilayah.php');
     exit;
 } else {
     // Jika bukan metode POST, kembalikan ke halaman utama
-    header('Location: ../master-wilayah.php');
+    header('Location: master-wilayah.php');
     exit;
 }

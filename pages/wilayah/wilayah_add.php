@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Validasi Input Wajib
     if (empty($_POST['kode_wilayah']) || empty($_POST['nama_wilayah']) || empty($_POST['level_wilayah'])) {
         $_SESSION['error'] = 'Kode, Nama, dan Level wilayah wajib diisi';
-        header('Location: ../master-wilayah.php');
+        header('Location: master-wilayah.php');
         exit;
     }
     
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Jika level 2 (Kab/Kota), kode_induk wajib ada
     if ($level_wilayah == 2 && empty($kode_induk)) {
         $_SESSION['error'] = 'Wilayah induk (Provinsi) wajib dipilih untuk level 2';
-        header('Location: ../master-wilayah.php');
+        header('Location: master-wilayah.php');
         exit;
     }
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($result_check->num_rows > 0) {
         $_SESSION['error'] = "Kode wilayah '$kode_wilayah' sudah terdaftar";
-        header('Location: ../master-wilayah.php');
+        header('Location: master-wilayah.php');
         exit;
     }
     $stmt_check->close();
@@ -63,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = 'Gagal mempersiapkan query: ' . $conn->error;
     }
     
-    header('Location: ../master-wilayah.php');
+    header('Location: master-wilayah.php');
     exit;
 } else {
     // Jika akses langsung via URL (bukan POST)
-    header('Location: ../master-wilayah.php');
+    header('Location: master-wilayah.php');
     exit;
 }

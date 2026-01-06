@@ -26,17 +26,17 @@ if (!function_exists('active')) {
             <a href="/sirambo/pages/dashboard.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('dashboard', $page) ?>">
                 <i class="bi bi-grid-1x2"></i> <span>Dashboard</span>
             </a>
-            
-            <a href="/sirambo/pages/pdrb.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('pdrb', $page) ?>">
+
+            <a href="/sirambo/pages/pdrb/pdrb.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('pdrb', $page) ?>">
                 <i class="bi bi-bar-chart-line"></i> <span>Rilis & Rekonsiliasi</span>
             </a>
 
             <!-- Menu Master Wilayah Single -->
-            <a href="/sirambo/pages/master-wilayah.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('master_wilayah', $page) ?>">
+            <a href="/sirambo/pages/wilayah/master-wilayah.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('master_wilayah', $page) ?>">
                 <i class="bi bi-geo-alt"></i> <span>Master Wilayah</span>
             </a>
 
-            <a href="/sirambo/pages/users.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('users', $page) ?>">
+            <a href="/sirambo/pages/users/users.php" class="nav-link-custom d-flex align-items-center gap-3 px-3 py-2 rounded-3 <?= active('users', $page) ?>">
                 <i class="bi bi-people"></i> <span>Manajemen User</span>
             </a>
         </nav>

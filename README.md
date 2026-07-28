@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="public/assets/img/sirambo-banner-github.png" width="100%" alt="SiRAMBO Cover Banner">
+
 # 🏛️ SiRAMBO
 ### Sistem Rekonsiliasi Angka PDRB
 
@@ -17,9 +19,6 @@
 
 ---
 
-<div align="center">
-  <img src="public/assets/img/sirambo-logo-github.png" width="450" alt="SiRAMBO Logo" style="margin-bottom: 20px;">
-</div>
 
 ## 🏢 Tentang Instansi
 

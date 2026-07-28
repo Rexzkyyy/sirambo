@@ -2,7 +2,7 @@
 
 <img src="public/assets/img/sirambo-banner-github.png" width="100%" alt="SiRAMBO Cover Banner">
 
-# 🏛️ SiRAMBO
+# 🏛️ SIRAMBO
 ### Sistem Rekonsiliasi Angka PDRB
 
 **Aplikasi web internal berbasis Laravel untuk perhitungan, rekonsiliasi, dan analisis data**

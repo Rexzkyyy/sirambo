@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend('bps', function ($app) use ($socialite) {
+            $config = $app['config']['services.bps'];
+            return $socialite->buildProvider(\App\Socialite\BpsProvider::class, $config);
+        });
     }
 }

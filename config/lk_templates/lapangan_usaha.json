@@ -1,0 +1,135 @@
+{
+  "key": "lapangan_usaha",
+  "name": "Tanaman Pangan",
+  "columns": [
+    {
+      "key": "wujud",
+      "label": "Wujud/ Kegiatan",
+      "group": "Output Utama",
+      "type": "text",
+      "is_meta": true
+    },
+    {
+      "key": "satuan",
+      "label": "Satuan/ Unit",
+      "group": "Output Utama",
+      "type": "text",
+      "is_meta": true
+    },
+    {
+      "key": "kuantum",
+      "label": "Kuantum",
+      "group": "Output Utama",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "harga_produsen",
+      "label": "Harga Produsen {YEAR} (Rp/Unit)",
+      "group": "Output Utama",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "nilai_output_utama",
+      "label": "Nilai (Juta Rp) (5)x(6)",
+      "group": "Output Utama",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "((kuantum || 0) * (harga_produsen || 0)) / 1000000"
+    },
+    {
+      "key": "rasio_output_ikut",
+      "label": "Rasio Tahun 2010",
+      "group": "Output Ikutan",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "nilai_output_ikut",
+      "label": "Nilai (Juta Rp) (8)x(7)",
+      "group": "Output Ikutan",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(nilai_output_utama || 0) * (rasio_output_ikut || 0)"
+    },
+    {
+      "key": "biaya_perawatan_skr",
+      "label": "Total Biaya Perawatan Triwulan I (Juta Rp)",
+      "group": "WIP",
+      "type": "numeric",
+      "is_meta": true,
+      "visible_in": "berlaku"
+    },
+    {
+      "key": "biaya_perawatan_sbl",
+      "label": "Total Biaya Perawatan Sebelumnya (Juta Rp)",
+      "group": "WIP",
+      "type": "numeric",
+      "is_meta": true,
+      "visible_in": "berlaku"
+    },
+    {
+      "key": "deflator",
+      "label": "Deflator",
+      "group": "WIP",
+      "type": "numeric",
+      "is_meta": false,
+      "visible_in": "konstan"
+    },
+    {
+      "key": "wip_berlaku",
+      "label": "WIP Berlaku (Juta Rp)",
+      "group": "WIP",
+      "type": "numeric",
+      "is_meta": false,
+      "visible_in": "konstan"
+    },
+    {
+      "key": "wip",
+      "label": "Nilai (Juta Rp)",
+      "group": "WIP",
+      "type": "formula",
+      "is_meta": false,
+      "formula_berlaku": "(biaya_perawatan_skr || 0) - (biaya_perawatan_sbl || 0)",
+      "formula_konstan": "(wip_berlaku || 0) / ((deflator || 100) / 100)"
+    },
+    {
+      "key": "output_adh",
+      "label": "Output ADH Produsen (Juta Rp) [(7)+(9)+(12)]",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(nilai_output_utama || 0) + (nilai_output_ikut || 0) + (wip || 0)"
+    },
+    {
+      "key": "rasio_konsumsi_antara",
+      "label": "Rasio Tahun 2010",
+      "group": "Konsumsi Antara",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "konsumsi_antara",
+      "label": "Nilai (Juta Rp) ((13)-(12))x(14)",
+      "group": "Konsumsi Antara",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "((output_adh || 0) - (wip || 0)) * (rasio_konsumsi_antara || 0)"
+    },
+    {
+      "key": "nilai_ntb",
+      "label": "Nilai Tambah Bruto (Juta Rp) (13)-(15)",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(output_adh || 0) - (konsumsi_antara || 0)"
+    }
+  ],
+  "display": {
+    "nilai_output_utama": true,
+    "nilai_output_ikut": true,
+    "wip": true,
+    "output_adh": true,
+    "konsumsi_antara": true,
+    "nilai_ntb": true
+  }
+}

@@ -22,8 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'id_provinsi',
-        'id_kabupaten'
+        'id_wilayah',
+        'sso_id',
+        'nip',
     ];
 
     /**
@@ -48,4 +49,33 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function wilayah()
+{
+    return $this->belongsTo(Wilayah::class, 'id_wilayah', 'id_wilayah');
 }
+
+// Relasi shortcut untuk nama wilayah
+public function namaWilayah()
+{
+    return $this->hasOneThrough(
+        Provinsi::class,     // jika tipe provinsi
+        Wilayah::class,
+        'id_wilayah',        // foreign key Wilayah di users
+        'id_provinsi',       // foreign key Provinsi
+        'id',                // local key users.id_wilayah
+        'id_provinsi'        // local key Wilayah.id_provinsi
+    );
+}
+
+    public function provinsi()
+{
+    return $this->belongsTo(Provinsi::class, 'id_provinsi', 'id');
+}
+
+public function kabupaten()
+{
+    return $this->belongsTo(Kabupaten::class, 'id_kabupaten', 'id_kabupaten');
+}
+
+}
+

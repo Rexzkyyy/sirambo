@@ -12,10 +12,15 @@ class Kategori extends Model
 
     protected $fillable = [
         'kode_kategori',
-        'nama_kategori'
+        'nama_kategori',
+        'pendekatan'   // ✅ TAMBAHKAN INI
     ];
 
-       public function nilaiKategori()
+    // =============================
+    // RELATIONSHIPS
+    // =============================
+
+    public function nilaiKategori()
     {
         return $this->hasMany(NilaiKategori::class, 'id_kategori', 'id_kategori');
     }
@@ -24,4 +29,15 @@ class Kategori extends Model
     {
         return $this->hasMany(SubKategori::class, 'id_kategori', 'id_kategori');
     }
+
+    public function scopeLapanganUsaha($query)
+    {
+        return $query->where('pendekatan', 'lapangan_usaha');
+    }
+
+    public function scopePengeluaran($query)
+    {
+        return $query->where('pendekatan', 'pengeluaran');
+    }
+
 }

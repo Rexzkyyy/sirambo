@@ -1,0 +1,102 @@
+{
+    "key": "kehutanan",
+    "name": "Kehutanan",
+    "columns": [
+        {
+            "key": "kuantum",
+            "label": "Kuantum",
+            "group": "Output Utama",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "harga_produsen",
+            "label": "Harga Produsen",
+            "group": "Output Utama",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "nilai_output_utama",
+            "label": "Nilai",
+            "group": "Output Utama",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "((kuantum || 0) * (harga_produsen || 0)) / 1000000"
+        },
+        {
+            "key": "rasio_output_ikut",
+            "label": "Rasio Ikutan",
+            "group": "Output Ikutan",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "nilai_output_ikut",
+            "label": "Nilai",
+            "group": "Output Ikutan",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "(nilai_output_utama || 0) * (rasio_output_ikut || 0)"
+        },
+        {
+            "key": "biaya_perawatan",
+            "label": "Biaya Thn Berjalan",
+            "group": "WIP",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "biaya_sebelumnya",
+            "label": "Biaya Thn Sblm",
+            "group": "WIP",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "wip",
+            "label": "Nilai WIP",
+            "group": "WIP",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "((biaya_perawatan || 0) - (biaya_sebelumnya || 0)) / 1000000"
+        },
+        {
+            "key": "output_adh",
+            "label": "Output ADH",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "(nilai_output_utama || 0) + (nilai_output_ikut || 0) + (wip || 0)"
+        },
+        {
+            "key": "rasio_konsumsi_antara",
+            "label": "Rasio KA",
+            "group": "Konsumsi Antara",
+            "type": "numeric",
+            "is_meta": false
+        },
+        {
+            "key": "konsumsi_antara",
+            "label": "Nilai KA",
+            "group": "Konsumsi Antara",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "((output_adh || 0) - (wip || 0)) * (rasio_konsumsi_antara || 0)"
+        },
+        {
+            "key": "nilai_ntb",
+            "label": "Nilai Tambah Bruto",
+            "type": "formula",
+            "is_meta": false,
+            "formula": "(output_adh || 0) - (konsumsi_antara || 0)"
+        }
+    ],
+    "display": {
+        "nilai_output_utama": true,
+        "nilai_output_ikut": true,
+        "wip": true,
+        "output_adh": true,
+        "konsumsi_antara": true,
+        "nilai_ntb": true
+    }
+}

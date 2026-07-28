@@ -1,0 +1,52 @@
+{
+  "key": "jasa_pertanian",
+  "name": "Jasa Pertanian",
+  "columns": [
+    {
+      "key": "nilai_output_utama",
+      "label": "Nilai Produksi Utama ADHB",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "rasio_jasa_pertanian",
+      "label": "Rasio Jasa Pertanian Konstan",
+      "type": "numeric",
+      "is_meta": true
+    },
+    {
+      "key": "output_adh",
+      "label": "Nilai Jasa Pertanian",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(nilai_output_utama || 0) * (rasio_jasa_pertanian || 0)"
+    },
+    {
+      "key": "rasio_konsumsi_antara",
+      "label": "Rasio Konsumsi Antara",
+      "group": "Konsumsi Antara",
+      "type": "numeric",
+      "is_meta": false
+    },
+    {
+      "key": "konsumsi_antara",
+      "label": "Nilai KA",
+      "group": "Konsumsi Antara",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(output_adh || 0) * (rasio_konsumsi_antara || 0)"
+    },
+    {
+      "key": "nilai_ntb",
+      "label": "Nilai Tambah Bruto",
+      "type": "formula",
+      "is_meta": false,
+      "formula": "(output_adh || 0) - (konsumsi_antara || 0)"
+    }
+  ],
+  "display": {
+    "output_adh": true,
+    "konsumsi_antara": true,
+    "nilai_ntb": true
+  }
+}

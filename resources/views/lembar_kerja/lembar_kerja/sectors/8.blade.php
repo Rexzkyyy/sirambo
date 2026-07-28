@@ -1,0 +1,1 @@
+@include('lembar_kerja.partials.tabel_dynamic', ['template' => 'jasa_pertanian', 'tipePdrb' => $tipePdrb])

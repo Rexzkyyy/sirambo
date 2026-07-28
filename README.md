@@ -544,10 +544,10 @@ Aplikasi SIRAMBO dikembangkan oleh:
 
 | Nama | Peran | Program / Organisasi |
 |---|---|---|
-| **Fani Dewi Astuti, S.S.T., M.E.** | Mentor 1 | Tim Kerja Nerwilis BPS Provinsi Sulawesi Tenggara |
-| **Madya** | Mentor 2 | Staf Nerwilis BPS Provinsi Sulawesi Tenggara |
-| **Ikhsanuddin Rezki, S.Kom.** | Full-stack Developer | Tim Kerja Nerwilis & Magang Hub 2025 — Batch 2 & 3 |
-| **Annisa Azzahra Tarimana, S.T.** | Full-stack Developer | Tim Kerja Nerwilis & Magang Hub 2025 — Batch 2 & 3 |
+| **Fani Dewi Astuti, S.S.T., M.E.** | Mentor & Supervisor | Tim Kerja Nerwilis BPS Provinsi Sulawesi Tenggara |
+| **Statistisi Ahli Madya & Seluruh Staf** | Tim Pembina & Pendukung | Tim Kerja Nerwilis BPS Provinsi Sulawesi Tenggara |
+| **Ikhsanuddin Rezki, S.Kom.** | Full-stack Developer | Magang Hub 2025 — Batch 2 & 3 |
+| **Annisa Azzahra Tarimana, S.T.** | Full-stack Developer | Magang Hub 2025 — Batch 2 & 3 |
 
 > Dikembangkan dalam program **Nerwilis** dan **Magang Hub 2025 Batch 2 & 3** di **BPS Provinsi Sulawesi Tenggara**.
 

@@ -542,12 +542,14 @@ Framework Laravel yang digunakan dilisensikan di bawah [MIT License](https://ope
 
 Aplikasi SIRAMBO dikembangkan oleh:
 
-| Nama | Peran | Program |
+| Nama | Peran | Program / Organisasi |
 |---|---|---|
-| **Ikhsanuddin Rezki** | Full-stack Developer | Tim Kerja Newliris & Magang Hub 2025 — Batch 2 & 3 |
-| **Annisa Azzahra Tarimana** | Full-stack Developer | Tim Kerja Newliris & Magang Hub 2025 — Batch 2 & 3 |
+| **Fani Dewi Astuti, S.S.T., M.E.** | Mentor 1 | Tim Kerja Nerwilis BPS Provinsi Sulawesi Tenggara |
+| **Madya** | Mentor 2 | Staf Nerwilis BPS Provinsi Sulawesi Tenggara |
+| **Ikhsanuddin Rezki, S.Kom.** | Full-stack Developer | Tim Kerja Nerwilis & Magang Hub 2025 — Batch 2 & 3 |
+| **Annisa Azzahra Tarimana, S.T.** | Full-stack Developer | Tim Kerja Nerwilis & Magang Hub 2025 — Batch 2 & 3 |
 
-> Dikembangkan dalam program **Newliris** dan **Magang Hub 2025 Batch 2 & 3** di **BPS Provinsi Sulawesi Tenggara**.
+> Dikembangkan dalam program **Nerwilis** dan **Magang Hub 2025 Batch 2 & 3** di **BPS Provinsi Sulawesi Tenggara**.
 
 ---
 
@@ -571,7 +573,7 @@ Aplikasi SIRAMBO dibangun di atas teknologi dan pustaka *open-source* berikut:
 
 <div align="center">
 
-Dikembangkan dengan ❤️ oleh **Tim Kerja Newliris & Magang Hub 2025**
+Dikembangkan dengan ❤️ oleh **Tim Kerja Nerwilis & Magang Hub 2025**
 untuk **BPS Provinsi Sulawesi Tenggara**
 
 *Mengubah kerja manual Excel menjadi platform kolaborasi data PDRB yang cepat, akurat, dan real-time.*

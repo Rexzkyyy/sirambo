@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🏛️ SIRAMBO
+<img src="public/assets/img/sirambo-logo-github.png" width="220" alt="SiRAMBO Logo" style="margin-bottom: 20px;">
+
+# 🏛️ SiRAMBO
 ### Sistem Rekonsiliasi Angka PDRB
 
 **Aplikasi web internal berbasis Laravel untuk perhitungan, rekonsiliasi, dan analisis data**
